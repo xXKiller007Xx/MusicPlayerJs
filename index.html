@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Music Player</title>
+  </head>
+  <body>
+    <div id="music_player">
+      <div id="div_info">
+        <div id="div_img">
+          <img id="song_img" src="" alt="" class="border_50 anim_rot pause" />
+        </div>
+        <div id="div_title">
+          <p id="title"></p>
+        </div>
+        <div id="div_singer_album">
+          <span id="singer"></span> -
+          <span id="album"></span>
+        </div>
+      </div>
+      <div id="div_control">
+        <div id="div_range_btn">
+          <audio src="" id="aud" class=""></audio>
+          <input
+            type="range"
+            name=""
+            id="range_btn"
+            max="100"
+            min="0"
+            step="1"
+            value="0"
+            class="range_btn"
+          />
+        </div>
+        <div id="div_control_btn">
+          <button type="button" class="btn" id="shuffle_btn">
+            <i class="bi bi-shuffle"></i>
+          </button>
+          <button type="button" class="btn" id="prev_btn">
+            <i class="bi bi-arrow-left-circle"></i>
+          </button>
+          <button type="button" class="btn" id="play_pause_btn">
+            <i class="bi bi-play-circle"></i>
+          </button>
+          <button type="button" class="btn" id="next_btn">
+            <i class="bi bi-arrow-right-circle"></i>
+          </button>
+          <button type="button" class="btn" id="replay_btn">
+            <i class="bi bi-arrow-counterclockwise"></i>
+          </button>
+        </div>
+      </div>
+      <div id="div_list">
+        <ul id="songs"></ul>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
