@@ -177,7 +177,7 @@ var shuffleMusic = (arr) => {
 };
 
 const list = $$(".list");
-function setActive() {
+function setActive(index) {
   list[index].classList.remove("title_no_active");
   list[index].classList.add("title_active");
   for (let i = 0; i < list.length; i++) {
@@ -186,6 +186,13 @@ function setActive() {
       if (!list[i].classList.contains("title_active")) {
         list[i].classList.remove("title_no_active");
         list[i].classList.add("title_active");
+        isPlaying = true;
+        if (isPlaying) {
+          play_pause_btn.innerHTML = pause;
+        } else {
+          play_pause_btn.innerHTML = play;
+        }
+        playMusic(list[i].value);
       }
     });
   }
@@ -193,9 +200,9 @@ function setActive() {
 function eraseActive() {
   for (let i = 0; i < list.length; i++) {
     list[i].classList.remove("title_active");
-    list[i].classList.add('title_no_active')
+    list[i].classList.add("title_no_active");
   }
 }
-setActive();
+setActive(index);
 
 console.log(list);
