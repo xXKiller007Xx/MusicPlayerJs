@@ -41,7 +41,8 @@
   }
 
   #song_img {
-    width: 15rem;
+    min-width: 50px;
+    width: 30vh;
     transition: width 0.2s;
     margin-top: 5.5%;
   }
