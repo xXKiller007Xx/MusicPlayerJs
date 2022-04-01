@@ -204,5 +204,3 @@ function eraseActive() {
   }
 }
 setActive(index);
-
-console.log(list);
