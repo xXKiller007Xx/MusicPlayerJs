@@ -24,59 +24,59 @@ var isShuffle = false;
 const Music_Player = [
   {
     id: 0,
-    title: "Là Ai Từ Bỏ, Là Ai Vô Yình",
-    song_path: "data/mp3/LaAiTuBo,LaAiVoTinh.mp3",
-    song_img: "data/img/LaAiTuBo,LaAiVoTinh.jpg",
+    title: "Là Ai Từ Bỏ, Là Ai Vô Tình",
+    song_path: "data/mp3/0.mp3",
+    song_img: "data/img/0.jpg",
     singer: "Hương Ly, Jombie",
     album: "Là Ai Từ Bỏ, Là Ai Vô Tình (Single)",
   },
   {
     id: 1,
     title: "Em Của Ngày Hôm Qua",
-    song_path: "data/mp3/LaAiTuBo,LaAiVoTinh.mp3",
-    song_img: "data/img/EmCuaNgayHomQua.jpg",
+    song_path: "data/mp3/1.mp3",
+    song_img: "data/img/1.jpg",
     singer: "Sơn Tùng M-TP",
     album: "Em Của Ngày Hôm Qua (Single)",
   },
   {
     id: 2,
     title: "We Don't Talk Anymore",
-    song_path: "data/mp3/WeDontTalkAnymore.mp3",
-    song_img: "data/img/WeDontTalkAnymore.jpg",
+    song_path: "data/mp3/2.mp3",
+    song_img: "data/img/2.jpg",
     singer: "Charlie Puth, Selena Gomez",
     album: "Nine Track Mile",
   },
   {
     id: 3,
     title: "Let The Battle Begin!-A Merc's Job",
-    song_path: "data/mp3/LetTheBattlesBegin!-AMerc'sJob.mp3",
-    song_img: "data/img/ff7remake.jpg",
+    song_path: "data/mp3/3.mp3",
+    song_img: "data/img/3.jpg",
     singer: "",
     album: "FINAL FANTASY VII REMAKE ORIGINAL SOUNDTRACK",
   },
   {
     id: 4,
-    title: "Em của ngày hôm qua",
-    song_path: "data/mp3/La Ai Tu Bo, La Ai Vo Tinh.mp3",
-    song_img: "data/img/La Ai Tu Bo, La Ai Vo Tinh.jpg",
+    title: "Haru Haru",
+    song_path: "data/mp3/4.mp3",
+    song_img: "data/img/4.jpg",
     singer: "Sơn Tùng M-TP",
     album: "Em của ngày hôm qua (Single)",
   },
   {
     id: 5,
-    title: "Em của ngày hôm qua",
-    song_path: "data/mp3/LaAiTuBo,LaAiVoTinh.mp3",
-    song_img: "data/img/LaAiTuBo,LaAiVoTinh.jpg",
-    singer: "Sơn Tùng M-TP",
+    title: "Some Thing Just Like This",
+    song_path: "data/mp3/5.mp3",
+    song_img: "data/img/5.jpg",
+    singer: "The Chainsmokers, ColdpLay",
     album: "Em Của Ngày Hôm Qua (Single)",
   },
   {
     id: 6,
-    title: "Em của ngày hôm qua",
-    song_path: "data/mp3/La Ai Tu Bo, La Ai Vo Tinh.mp3",
-    song_img: "data/img/La Ai Tu Bo, La Ai Vo Tinh.jpg",
-    singer: "Sơn Tùng M-TP",
-    album: "Em của ngày hôm qua (Single)",
+    title: "Faded",
+    song_path: "data/mp3/6.mp3",
+    song_img: "data/img/6.jpg",
+    singer: "Alan Walker",
+    album: "Faded (Single)",
   },
 ];
 //Event Handler
@@ -97,9 +97,6 @@ audio.addEventListener("ended", () => {
     audio.play();
   }
   if (isShuffle) {
-    for (let i = 0; i < shuffleMusic(Music_Player).length; i++) {
-      playMusic(shuffleMusic(Music_Player)[i]);
-    }
   } else {
     if (index == Music_Player.length - 1) {
       index = 0;
@@ -126,9 +123,9 @@ play_pause_btn.addEventListener("click", () => {
 });
 audio.addEventListener("timeupdate", () => {
   let playedPercentage = Math.floor((audio.currentTime / audio.duration) * 100);
-  range_btn.value = playedPercentage;
+  if (audio) range_btn.value = playedPercentage;
 });
-range_btn.addEventListener("change", (e) => {
+range_btn.addEventListener("change", () => {
   audio.currentTime = (range_btn.value / 100) * audio.duration;
 });
 
@@ -142,15 +139,37 @@ next_btn.addEventListener("click", () => {
   } else {
     index++;
   }
-  playMusic(index);
+  if (isShuffle) {
+    playMusic(shuffleMusic(Music_Player));
+  } else {
+    setActive(index);
+    playMusic(index);
+  }
+  isPlaying = true;
+  if (isPlaying) {
+    play_pause_btn.innerHTML = pause;
+  }
 });
 prev_btn.addEventListener("click", () => {
-  if (index == 0) {
-    index = Music_Player.length - 1;
+  if (audio.currentTime > 2) {
+    audio.currentTime = 0;
   } else {
-    index--;
+    if (index == 0) {
+      index = Music_Player.length - 1;
+    } else {
+      index--;
+    }
+    if (isShuffle) {
+      playMusic(shuffleMusic(Music_Player));
+    } else {
+      setActive(index);
+      playMusic(index);
+    }
+    isPlaying = true;
+    if (isPlaying) {
+      play_pause_btn.innerHTML = pause;
+    }
   }
-  playMusic(index);
 });
 
 function set(index) {
@@ -167,35 +186,23 @@ function playMusic(index) {
 }
 set(index);
 
-var shuffleMusic = (arr) => {
-  var tempArr = new Array();
-  tempArr[0] = Math.floor(Math.random() * (arr.length - 1));
-  for (let i = 1; i < arr.length - 1; i++) {
-    tempArr[i] = Math.floor(Math.random() * (arr.length - 1));
-  }
-  return tempArr;
-};
-
 const list = $$(".list");
+//
 function setActive(index) {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].classList.contains("title_active")) {
+      list[i].classList.add("title_no_active");
+      list[i].classList.remove("title_active");
+    }
+  }
   list[index].classList.remove("title_no_active");
   list[index].classList.add("title_active");
-  for (let i = 0; i < list.length; i++) {
-    list[i].addEventListener("click", () => {
-      eraseActive();
-      if (!list[i].classList.contains("title_active")) {
-        list[i].classList.remove("title_no_active");
-        list[i].classList.add("title_active");
-        isPlaying = true;
-        if (isPlaying) {
-          play_pause_btn.innerHTML = pause;
-        } else {
-          play_pause_btn.innerHTML = play;
-        }
-        playMusic(list[i].value);
-      }
-    });
-  }
+}
+for (let i = 0; i < list.length; i++) {
+  list[i].addEventListener("click", () => {
+    setActive(list[i].value);
+    playMusic(list[i].value);
+  });
 }
 function eraseActive() {
   for (let i = 0; i < list.length; i++) {
@@ -203,4 +210,5 @@ function eraseActive() {
     list[i].classList.add("title_no_active");
   }
 }
+
 setActive(index);
