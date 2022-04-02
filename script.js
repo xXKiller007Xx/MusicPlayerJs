@@ -33,7 +33,7 @@ const Music_Player = [
   {
     id: 1,
     title: "Em Của Ngày Hôm Qua",
-    song_path: "data/mp3/EmCuaNgayHomQua.mp3",
+    song_path: "data/mp3/LaAiTuBo,LaAiVoTinh.mp3",
     song_img: "data/img/EmCuaNgayHomQua.jpg",
     singer: "Sơn Tùng M-TP",
     album: "Em Của Ngày Hôm Qua (Single)",
